@@ -22,23 +22,24 @@ makeCacheMatrix <- function(x = matrix()) {
     setinverse <- function(inverse) inv <<- inverse
     ### 4. get the value of the inverse of the matrix
     getinverse <- function() inv
-    #### return our list
+    ### 5. return our list
     list(set=set, get=get, setinverse=setinverse, getinverse=getinverse)
 }
 
 
 
 ## We check if the inverse has already been calculated, if so, we simply return its value
-## Otherwise, it calculates it.
+## Otherwise, it calculates it and then caches it.
 
 cacheSolve <- function(x, ...) {
-    ## Return a matrix that is the inverse of 'x'
+    ### Return a matrix that is the inverse of 'x'
     inv <- x$getinverse() #from cache
+    ###Check if value is already assigned, and then catch it
     if(!is.null(inv)) {
         message("getting cached data.")
         return(inv)
     }
-    # If it has bot been calculated yet 
+    ### If it has bot been calculated yet, we calculate and cache it for eventual other uses 
     data <- x$get()
     inv <- solve(data)
     x$setinverse(inv)
